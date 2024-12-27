@@ -40,7 +40,7 @@ const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 // ...
  
 export async function updateInvoice(id: string, formData: FormData) {
-    try {
+ 
   const { customerId, amount, status } = UpdateInvoice.parse({
     customerId: formData.get('customerId'),
     amount: formData.get('amount'),
@@ -55,22 +55,15 @@ export async function updateInvoice(id: string, formData: FormData) {
         SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
         WHERE id = ${id}
       `;
-  } catch (error) {
-    console.log('Failed to Update Invoice.')
-    return { message: 'Database Error: Failed to Update Invoice.' };
-  }
+ 
  
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
 }
 export async function deleteInvoice(id: string) {
     
-    try {
+  
         await sql`DELETE FROM invoices WHERE id = ${id}`;
         revalidatePath('/dashboard/invoices');
-        return { message: 'Deleted Invoice.' };
-      } catch (error) {
-        console.log('Failed to Delete Invoice.')
-        return { message: 'Database Error: Failed to Delete Invoice.' };
-      }
+        
 }
