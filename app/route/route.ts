@@ -1,3 +1,0 @@
-function res(){
-    return 'hi'
-}
